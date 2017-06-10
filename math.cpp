@@ -11,6 +11,4 @@ int main() {
     cout << "ingrese el ancho" << endl;
     cin >> ancho;
     area = alto * ancho;
-    cout 
-
 }
