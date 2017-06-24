@@ -4,20 +4,19 @@
 #include <time.h>
 using namespace std;
 int main() {
-    int a, b;
+    int arma, escudo, dano;
     srand(time(NULL));
-    bool esMayor, esIgual;
-    a= rand()%4;
-    b= rand()%4;
-    esMayor = a > b;
-    if (esIgual){
-    cout << a << " es igual a " << b << endl;   
-    } else {
-    if (esMayor){
-        cout << a << " es mayor " << b << endl;
+    arma = rand()%6+1;
+    arma += rand()%6+1;
+    arma += 3;
+
+    escudo = rand()%4+1;
+    escudo += rand()%4+1;
+    escudo += 1;
+    dano = arma - escudo;
+    if (dano > 0){
+        cout << " el dano es " << dano << endl;
     } else {        
-        cout << a << " es menor " << b << endl;
-    esIgual = a == b;
-        }
+        cout << " no sufrio dano " << endl;
     }
 }
