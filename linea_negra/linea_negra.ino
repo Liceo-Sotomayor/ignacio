@@ -8,6 +8,7 @@
 const int sensor1 = 11;
 const int sensor2 = 12;
 const int sensor3 = 6;
+int historia[5][3];
 
 void setup() {
   pinMode (enableA, OUTPUT);
@@ -19,6 +20,17 @@ void setup() {
   pinMode(sensor1 , INPUT);
   pinMode(sensor2 , INPUT);
   pinMode(sensor3 , INPUT);
+}
+
+void agregarMedida(int derecha, int centro, int izquierda) {
+  for (int i = 3; i >= 0; i--) {
+    historia[i+1][0] = historia[i][0];
+    historia[i+1][1] = historia[i][1];
+    historia[i+1][2] = historia[i][2]; 
+  }
+  historia[0][0] = derecha;
+  historia[0][1] = centro;
+  historia[0][2] = izquierda;
 }
 
 void definirSentidoA(int sentido){
@@ -39,7 +51,8 @@ void definirSentidoA(int sentido){
     digitalWrite (pinA2, HIGH);
   }   
 }
-  void definirSentidoB(int sentido){
+
+void definirSentidoB(int sentido){
   //Prendiendo el motor si el sentido es diferente a 0
   if (sentido == 0) {
     digitalWrite (enableB, LOW);
@@ -58,7 +71,12 @@ void definirSentidoA(int sentido){
   }   
 }
 
+int calcularSentido(int fila) {
+  return (historia[0][fila] + historia[1][fila] + historia[2][fila]) / 3;
+}
+
 void loop() {
-  definirSentidoA(digitalRead(sensor1));
-  definirSentidoB(digitalRead(sensor3));
+  agregarMedida(digitalRead(sensor1), digitalRead(sensor2), digitalRead(sensor3));
+  definirSentidoA(calcularSentido(0));
+  definirSentidoB(calcularSentido(2));
 }
